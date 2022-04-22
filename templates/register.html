@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>register</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+{##}
+{#  <div style="color: red" name="message">#}
+{#    {% if message %}#}
+{#      {{ message }}#}
+{#    {% endif %}#}
+{#  </div>#}
+  <div class="register">
+      <div class="form">
+        <form action="/register/" method="POST">
+        {% csrf_token %}
+            <p>
+            <p>用户id：<input type="text" name="userid"></p>
+            <p>用户名：<input type="text" name="username"></p>
+            <p>密码：<input type="password" name="password"></p>
+            <p>邮箱：<input type="text" name="email"></p>
+            <p><input type="submit" value="注册" name="reg2">
+                <input type="submit" value="返回" name="back"></p>
+            </p>
+        </form>
+      </div>
+      <p>{{ rlt }}</p>
+</div>
+
+</body>
+</html>

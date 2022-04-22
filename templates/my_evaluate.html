@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+    推荐图书
+{% endblock title %}
+
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+    <!-- 定义放置文章标题的div容器 -->
+    <div class="container">
+    <div class="card-body border d-flex justify-content-start">
+
+            <div class="align-self-center">
+                <h3>封面</h3>
+            </div>
+            <div class=" align-self-center  ml-auto">
+
+                <h3>图书详情</h3>
+            </div>
+            <div class=" align-self-center  ml-auto">
+                <h3>我的评分</h3>
+            </div>
+    </div>
+    {% for item in items %}
+        <div class="card-body border d-flex justify-content-start">
+            <a class="media-left" href="#">
+                <img src="static/imgs/img/{{ item.img }}" style="width:200px; height:200px;" alt="封面图">
+            </a>
+                <div class=" align-self-center  ml-auto">
+                    <h2 class="media-heading">{{ item.item_name }}</h2>
+                    <h4>{{ item.item_content }}</h4>
+                </div>
+            <div class=" align-self-center  ml-auto">
+                <h2>{{ item.myscore }}</h2>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock content %}

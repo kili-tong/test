@@ -1,0 +1,67 @@
+body {
+  width: 100%;
+  height: 100vh;/*屏幕高度*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("/static/imgs/backimg.jpg") no-repeat ;
+  background-size: 100% 100%;
+}
+input::-webkit-input-placeholder {
+  /* placeholder颜色  */
+  color: #ffffff;
+  /* placeholder字体大小  */
+  font-size: 14px;
+}
+
+.login{
+    /*flex 布局*/
+    display: flex;
+    /*实现垂直居中*/
+    align-items: center;
+    /*实现水平居中*/
+    justify-content: center;
+
+    text-align: justify;
+    width: 25rem;
+  height: auto;
+  /* height: 30rem; */
+  background-color: #00000060;/*颜色的后两位是透明度*/
+  text-align: center;
+  padding: 2rem 4rem;
+
+}
+
+.register{
+    /*flex 布局*/
+    display: flex;
+    /*实现垂直居中*/
+    align-items: center;
+    /*实现水平居中*/
+    justify-content: center;
+
+    text-align: justify;
+    width: 25rem;
+  height: auto;
+  /* height: 30rem; */
+  background-color: #00000060;/*颜色的后两位是透明度*/
+  text-align: center;
+  padding: 2rem 4rem;
+}
+
+.form {
+  color: #ffffff;
+  width: 20rem;
+  font-size: 18px;
+  /*border-bottom: 2px solid #ffffff;*/
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  background: transparent;
+  /* color: #ffffff; */
+}
+
+
+
+
+
+

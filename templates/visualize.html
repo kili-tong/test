@@ -1,0 +1,253 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load static %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    首页
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+<!--<style>-->
+<!--.bg img{-->
+<!--	position: fixed; /*fixed 脱离文档流*/-->
+<!--	top:0;-->
+<!--	width: 100%;-->
+<!--	height:100%;-->
+<!--	opacity: 0.6;  /*不透明度*/-->
+<!--	z-index: -100; /*图层的级别*/-->
+<!--}-->
+
+<!--</style>-->
+
+<!--<div class="bg">-->
+<!--	&lt;!&ndash;div需要内容撑起，无内容时，无高度&ndash;&gt;-->
+<!--	<img src="/static/imgs/back2.jpg" alt="">-->
+<!--</div>-->
+
+<!--<div id="main">-->
+<!--</div>-->
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>校园二手图书大屏展示</title>
+    <script src="/static/bootstrap/js/echarts.min.js"></script>
+     <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        .quarter-div{
+            width: 50%;
+            height: 50%;
+            float: left;
+        }
+        .blue{
+            background-color: #FFFFFF;
+        }
+        .green{
+            background-color: #FFFFFF;
+        }
+        .orange{
+            background-color: #FFFFFF;
+        }
+        .yellow{
+            background-color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+         <div class="quarter-div blue" id="staff_month_orderCount" style="width: 700px;height:400px; margin-bottom: 20px"></div>
+         <div class="quarter-div blue" id="content" style="width: 700px;height:400px; margin-bottom: 20px"></div>
+         <div class="quarter-div blue" id="main" style="width: 700px;height:300px; margin-bottom: 20px"></div>
+         <div class="quarter-div blue" id="main2" style="width: 700px;height:300px; margin-bottom: 20px"></div>
+    </div>
+<script>
+
+    {#初始化 echarts 对象#}
+    var mychart = echarts.init(document.getElementById('staff_month_orderCount'));
+
+    var option = {
+         title : {
+            show:true, //显示策略，默认值true,可选为：true（显示） | false（隐藏）
+            text: '价格前十商品'},
+        xAxis: {
+            type: 'category',
+            data:{{item_name|safe}},
+            axisLabel: {
+              interval:0, //坐标刻度之间的显示间隔，默认就可以了（默认是不重叠）
+               rotate:38},
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: {{item_price|safe}},
+            type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)'
+        }
+        }]};
+    {#将 echarts对象与展示选项结合起来#}
+    mychart.setOption(option);
+
+var mychart2 = echarts.init(document.getElementById('content'));
+var xAxis_data = [];
+var y_data=[];
+
+    {#使用循环，依次将数据库需要展示的数据添加到刚才声明的数组中#}
+    {% for stu in objs %}
+        xAxis_data.push("{{stu.item_name}}")
+        y_data.push({{stu.item_score}})
+    {% endfor %}
+ var option = {
+        title : {
+            show:true, //显示策略，默认值true,可选为：true（显示） | false（隐藏）
+            text: '商品评分'},
+        xAxis: {
+            type: 'category',
+            data:xAxis_data,
+            axisLabel: {
+              interval:0, //坐标刻度之间的显示间隔，默认就可以了（默认是不重叠）
+               rotate:38},
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: y_data,
+            type: 'line',
+        showBackground: true,
+        backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)'
+        }
+        }]};
+
+ mychart2.setOption(option);
+
+var myChart3 = echarts.init(document.getElementById("main"));
+
+    option = {
+        title : {
+            show:true, //显示策略，默认值true,可选为：true（显示） | false（隐藏）
+            text: '价格大于15的商品'},
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '5%',
+            left: 'center'
+        },
+        series: [
+            {
+                name: '环形图',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '40',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data :{{data_list|safe}}
+
+            }
+        ]
+    };
+
+     myChart3.setOption(option);
+var myChart4 = echarts.init(document.getElementById("main2"));
+option = {
+    backgroundColor: '#2c343c',
+
+    title: {
+        text: '商品分类',
+        left: 'center',
+        top: 20,
+        textStyle: {
+            color: '#ccc'
+        }
+    },
+
+    tooltip: {
+        trigger: 'item'
+    },
+
+    visualMap: {
+        show: false,
+        min: 80,
+        max: 600,
+        inRange: {
+            colorLightness: [0, 1]
+        }
+    },
+    series: [
+        {
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '50%'],
+            data: [
+                {value: 6, name: '理工'},
+                {value: 12, name: '文学'},
+                {value: 7, name: '政治'},
+
+            ].sort(function (a, b) { return a.value - b.value; }),
+            roseType: 'radius',
+            label: {
+                color: 'rgba(255, 255, 255, 0.3)'
+            },
+            labelLine: {
+                lineStyle: {
+                    color: 'rgba(255, 255, 255, 0.3)'
+                },
+                smooth: 0.2,
+                length: 10,
+                length2: 20
+            },
+            itemStyle: {
+                color: '#c23531',
+                shadowBlur: 200,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            },
+
+            animationType: 'scale',
+            animationEasing: 'elasticOut',
+            animationDelay: function (idx) {
+                return Math.random() * 200;
+            }
+        }
+    ]
+};
+myChart4.setOption(option);
+</script>
+</body>
+</html>
+
+
+
+{% endblock content %}

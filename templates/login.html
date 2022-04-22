@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>login</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+
+</head>
+<body>
+
+  <div class="login">
+    <div class="form">
+        <form action=" " method="POST">
+    {% csrf_token %}
+        <p>
+        <p>用户id：<input type="text" name="username"></p>
+        <p>密码：<input type="password" name="password"></p>
+        <p><input type="submit" value="登录" name="sub">
+            <input type="submit" value="注册" name="reg1"></p>
+        </p>
+    </form>
+
+    </div>
+
+</div>
+              <p>{{ rlt }}</p>
+
+</body>
+</html>
